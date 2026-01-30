@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskMaster | Görev Yönetimi</title>
+    <title>TaskMaster | Pro</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
     <div class="container">
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         <header>
-            <h1><i class="fas fa-check-double"></i> TaskMaster</h1>
-            <p>Görevlerini Yönet, Zamanını Kazan</p>
+            <h1><i class="fas fa-tasks"></i> TaskMaster</h1>
+            <p>Verimli çalış, hedeflerine ulaş.</p>
         </header>
 
         <section class="add-task">
             <form action="{{ url_for('add') }}" method="POST">
-                <input type="text" name="title" placeholder="Yeni bir görev ekle..." required>
+                <input type="text" name="title" placeholder="Hangi görevi planlıyorsun?" required>
                 <input type="date" name="deadline">
                 <button type="submit" class="add-btn"><i class="fas fa-plus"></i></button>
             </form>
@@ -36,7 +49,8 @@
                     <div class="text-group">
                         <span class="task-text">{{ task.title }}</span>
                         {% if task.deadline %}
-                        <small class="deadline-text"><i class="far fa-calendar-alt"></i> {{ task.deadline }}</small>
+                        <small class="deadline-text"><i class="far fa-calendar-alt"></i> Son: {{ task.deadline
+                            }}</small>
                         {% endif %}
                     </div>
                 </div>
@@ -47,9 +61,12 @@
                 </div>
             </div>
             {% else %}
-            <p style="text-align: center; color: #64748b;">Henüz bir görev eklenmedi.</p>
+            <div class="no-tasks">
+                <p>Henüz planlanmış bir görev yok. Hadi bir tane ekle!</p>
+            </div>
             {% endfor %}
         </section>
     </div>
 </body>
+
 </html>
