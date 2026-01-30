@@ -11,12 +11,13 @@
     <div class="container">
         <header>
             <h1><i class="fas fa-check-double"></i> TaskMaster</h1>
-            <p>Bugün neler başaracaksın?</p>
+            <p>Görevlerini Yönet, Zamanını Kazan</p>
         </header>
 
         <section class="add-task">
-            <form action="#">
-                <input type="text" placeholder="Yeni bir görev ekle..." required>
+            <form action="{{ url_for('add') }}" method="POST">
+                <input type="text" name="title" placeholder="Yeni bir görev ekle..." required>
+                <input type="date" name="deadline">
                 <button type="submit" class="add-btn"><i class="fas fa-plus"></i></button>
             </form>
         </section>
@@ -25,24 +26,30 @@
             {% for task in tasks %}
             <div class="task-item {% if task.completed %}completed{% endif %}">
                 <div class="task-content">
-                    <span class="status-icon">
-                        <a href="{{ url_for('complete', task_id=task.id) }}">
-                            {% if task.completed %}
-                            <i class="fas fa-check-circle"></i>
-                            {% else %}
-                            <i class="far fa-circle"></i>
-                            {% endif %}
-                        </a>
-                    </span>
-                    <span class="task-text">{{ task.title }}</span>
+                    <a href="{{ url_for('complete', task_id=task.id) }}" class="status-btn">
+                        {% if task.completed %}
+                        <i class="fas fa-check-circle"></i>
+                        {% else %}
+                        <i class="far fa-circle"></i>
+                        {% endif %}
+                    </a>
+                    <div class="text-group">
+                        <span class="task-text">{{ task.title }}</span>
+                        {% if task.deadline %}
+                        <small class="deadline-text"><i class="far fa-calendar-alt"></i> {{ task.deadline }}</small>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="task-actions">
-                    <button class="delete-btn"><i class="fas fa-trash"></i></button>
+                    <a href="{{ url_for('delete', task_id=task.id) }}" class="delete-btn">
+                        <i class="fas fa-trash"></i>
+                    </a>
                 </div>
             </div>
+            {% else %}
+            <p style="text-align: center; color: #64748b;">Henüz bir görev eklenmedi.</p>
             {% endfor %}
         </section>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
