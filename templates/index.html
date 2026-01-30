@@ -26,11 +26,13 @@
             <div class="task-item {% if task.completed %}completed{% endif %}">
                 <div class="task-content">
                     <span class="status-icon">
-                        {% if task.completed %}
-                        <i class="fas fa-check-circle"></i>
-                        {% else %}
-                        <i class="far fa-circle"></i>
-                        {% endif %}
+                        <a href="{{ url_for('complete', task_id=task.id) }}">
+                            {% if task.completed %}
+                            <i class="fas fa-check-circle"></i>
+                            {% else %}
+                            <i class="far fa-circle"></i>
+                            {% endif %}
+                        </a>
                     </span>
                     <span class="task-text">{{ task.title }}</span>
                 </div>

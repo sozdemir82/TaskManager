@@ -1,39 +1,48 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# Geçici veri listemiz (Sayfa yenilendiğinde veriler kalır ama sunucu durursa sıfırlanır)
-tasks = [
-    {'id': 1, 'title': 'Flask Projesini Başlat', 'completed': False},
-    {'id': 2, 'title': 'Git Arayüzünü Çöz', 'completed': True}
-]
+# Veritabanı Ayarları (Proje klasöründe db.sqlite adında bir dosya oluşturur)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
+
+# Veritabanı Tablosu (Model)
+class Todo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
+    completed = db.Column(db.Boolean, default=False)
+
+# Veritabanını oluştur (İlk çalıştırmada tabloyu yaratır)
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def index():
-    return render_template('index.html', tasks=tasks)
+    todo_list = Todo.query.all()
+    return render_template('index.html', tasks=todo_list)
 
 @app.route('/add', methods=['POST'])
 def add():
     title = request.form.get('title')
-    if title:
-        # Yeni bir ID oluştur (Listenin uzunluğuna göre)
-        new_id = tasks[-1]['id'] + 1 if tasks else 1
-        tasks.append({'id': new_id, 'title': title, 'completed': False})
-    return redirect(url_for('index'))
-
-@app.route('/delete/<int:task_id>')
-def delete(task_id):
-    global tasks
-    # ID'si eşleşen görevi listeden filtreleyerek çıkarıyoruz
-    tasks = [t for t in tasks if t['id'] != task_id]
+    new_todo = Todo(title=title, completed=False)
+    db.session.add(new_todo)
+    db.session.commit()
     return redirect(url_for('index'))
 
 @app.route('/complete/<int:task_id>')
 def complete(task_id):
-    for task in tasks:
-        if task['id'] == task_id:
-            task['completed'] = not task['completed'] # Durumu tersine çevir (True/False)
-            break
+    todo = Todo.query.filter_by(id=task_id).first()
+    todo.completed = not todo.completed
+    db.session.commit()
+    return redirect(url_for('index'))
+
+@app.route('/delete/<int:task_id>')
+def delete(task_id):
+    todo = Todo.query.filter_by(id=task_id).first()
+    db.session.delete(todo)
+    db.session.commit()
     return redirect(url_for('index'))
 
 if __name__ == '__main__':
