@@ -1,4 +1,4 @@
-# TaskMaster Pro
+# TaskManager Pro
 
 TaskMaster Pro is a modern, user-friendly To-Do application developed using Flask and SQLAlchemy. This project implements core CRUD (Create, Read, Update, Delete) operations and follows modern web development best practices.
 
