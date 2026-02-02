@@ -1,50 +1,43 @@
-TaskMaster Pro
+# TaskMaster Pro
 
-TaskMaster, Flask ve SQLAlchemy kullanılarak geliştirilmiş, modern arayüzlü ve kullanıcı dostu bir yapılacaklar listesi (To-Do) uygulamasıdır. Bu proje, temel CRUD (Oluşturma, Okuma, Güncelleme, Silme) işlemlerini ve modern web geliştirme pratiklerini içermektedir.
+TaskMaster Pro is a modern, user-friendly To-Do application developed using Flask and SQLAlchemy. This project implements core CRUD (Create, Read, Update, Delete) operations and follows modern web development best practices.
 
-Özellikler
-Görev Yönetimi: Görev ekleme, silme ve tamamlama/geri alma.
+## Features
 
-Tarih Desteği: Her görev için son tarih (deadline) belirleme.
+* Task Management: Easily add, delete, and toggle tasks between completed and pending states.
+* Deadline Support: Set specific due dates for every task to stay organized.
+* Instant Notifications: A built-in "Flash Messages" system to provide real-time feedback on user actions.
+* Modern UI: A sleek, responsive CSS design featuring a Dark Mode theme.
+* OOP Architecture: Database models are structured using Object-Oriented Programming principles.
+* Secure Configuration: Sensitive database files and temporary folders are protected via .gitignore.
 
-Anlık Bildirimler: İşlem sonuçlarına göre kullanıcıyı bilgilendiren "Flash Messages" sistemi.
+## Technologies Used
 
-Modern UI: Karanlık tema (Dark Mode) destekli, responsive ve şık CSS tasarımı.
+* Backend: Python, Flask
+* Database: SQLite & Flask-SQLAlchemy (ORM)
+* Frontend: HTML5, CSS3 (Flexbox & Animations), FontAwesome Icons
 
-OOP Mimarisi: Veritabanı modelleri Nesne Yönelimli Programlama prensipleriyle yapılandırılmıştır.
+## Installation
 
-Güvenli Yapı: Veritabanı dosyaları ve geçici dosyalar .gitignore ile korunmaktadır.
+1. Clone the project to your local machine:
+   git clone https://github.com/your_username/your_project_name.git
 
-Kullanılan Teknolojiler
-Backend: Python, Flask
+2. Navigate to the project directory:
+   cd your_project_name
 
-Veritabanı: SQLite & Flask-SQLAlchemy (ORM)
+3. Install the required libraries:
+   pip install flask flask-sqlalchemy
 
-Frontend: HTML5, CSS3 (Flexbox & Animations), FontAwesome İkonları
+4. Run the application:
+   python app.py
 
-Kurulum
-Projeyi bilgisayarınıza klonlayın:
-git clone https://github.com/kullanici_adin/proje_adin.git
+5. Access the app in your browser:
+   Open http://127.0.0.1:5000
 
-Proje dizinine gidin:
-cd proje_adin
+## File Structure
 
-Gerekli kütüphaneleri yükleyin:
-pip install flask flask-sqlalchemy
-
-Uygulamayı çalıştırın:
-python app.py
-
-Tarayıcınızda şu adresi açın: http://127.0.0.1:5000
-
-Dosya Yapısı
-app.py: Uygulamanın ana mantığı ve rotaları.
-
-db.sqlite: Veritabanı dosyası (Yerel kullanım içindir, repo'da yer almaz).
-
-templates/: HTML şablonları.
-
-static/: CSS dosyaları ve görseller.
-
-.gitignore: Repo'ya dahil edilmeyecek dosyaların listesi.
-
+* app.py: Main application logic and routing.
+* db.sqlite: Local database file (excluded from the repository).
+* templates/: Folder containing HTML templates.
+* static/: Folder containing CSS files and visual assets.
+* .gitignore: List of files and directories to be ignored by Git.
